@@ -40,7 +40,6 @@ public class ClienteController {
     public String addCliente(Model model, Cliente veiculo) {
         model.addAttribute("add", Boolean.TRUE);
         model.addAttribute("cliente", new Cliente());
-        model.addAttribute("clientes", this.clienteService.listarTodos());
         model.addAttribute("tipoPessoa", TipoPessoa.values());
         return "cliente-add";
     }

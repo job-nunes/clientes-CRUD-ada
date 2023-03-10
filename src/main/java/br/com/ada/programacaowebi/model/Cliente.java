@@ -7,6 +7,8 @@ import jakarta.validation.constraints.NotNull;
 import lombok.*;
 import org.springframework.beans.factory.annotation.Value;
 
+import java.util.List;
+
 @Entity
 @Table(name = "tb_cliente")
 @Builder
