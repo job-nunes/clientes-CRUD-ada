@@ -3,6 +3,9 @@ package br.com.ada.programacaowebi.service;
 import br.com.ada.programacaowebi.model.Cliente;
 import br.com.ada.programacaowebi.repository.ClienteRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -20,6 +23,11 @@ public class ClienteService {
 
     public List<Cliente> listarTodos() {
         return this.clienteRepository.findAll();
+    }
+
+    public Page<Cliente> listarPaginado(Integer numeroPagina, Integer tamanhoPagina) {
+        return this.clienteRepository.
+                findAll(PageRequest.of(numeroPagina, tamanhoPagina, Sort.by(Sort.Order.asc("id"))));
     }
 
     public Optional<Cliente> buscarClientePorId(Long id) {

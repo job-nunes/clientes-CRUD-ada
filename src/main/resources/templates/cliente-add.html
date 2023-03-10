@@ -1,0 +1,72 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org" th:replace="~{base :: layout (~{:: main})}">
+<head>
+    <meta charset="UTF-8" />
+</head>
+<body>
+    <main>
+        <form th:action="${add} ? @{/cliente/add} : @{/cliente/{clienteId}/edit(clienteId=${cliente.id})}"
+              th:object="${cliente}" th:method="${add} ? 'POST' : 'PUT'">
+            <div class="container">
+                <h1 th:text="${add} ? 'Cadastrar Cliente' : 'Editar Cliente'"></h1>
+                <div th:if="${cliente.id}" class="mb-3 row">
+                    <label for="inputId" class="col-sm-2 col-form-label">Id</label>
+                    <div class="col-sm-10">
+                        <input type="text" th:readonly="${add} ? 'false' : 'true'" th:field="${cliente.id}" class="form-control" id="inputId">
+                    </div>
+                </div>
+                <div class="mb-3 row">
+                    <label for="inputNome" class="col-sm-2 col-form-label">Nome</label>
+                    <div class="col-sm-3">
+                        <input type="text" th:field="*{nome}" class="form-control" id="inputNome">
+                        <ul>
+                            <li th:each="erro : ${#fields.errors('nome')}" th:text="${erro}"></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="mb-3 row">
+                    <label for="inputDocumento" class="col-sm-2 col-form-label">Documento</label>
+                    <div class="col-sm-3">
+                        <input type="text" th:readonly="${add} ? 'false' : 'true'" th:field="*{documento}" class="form-control" id="inputDocumento">
+                        <ul>
+                            <li th:each="erro : ${#fields.errors('documento')}" th:text="${erro}"></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="mb-3 row">
+                    <label for="inputTipoPessoa" class="col-sm-2 col-form-label">Tipo Pessoa</label>
+                    <div class="col-sm-3">
+                        <select class="form-select" name="tipoPessoa">
+                            <option th:each="tipo : ${tipoPessoa}" th:value="${tipo}" th:text="${tipo.tipoPessoa}" id="inputTipoPessoa"></option>
+                        </select>
+                        <ul>
+                            <li th:each="erro : ${#fields.errors('tipoPessoa')}" th:text="${erro}"></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="mb-3 row">
+                    <label for="inputEndereco" class="col-sm-2 col-form-label">Endereço</label>
+                    <div class="col-sm-3">
+                        <input type="text" th:field="*{endereco}" class="form-control" id="inputEndereco">
+                    </div>
+                </div>
+                <div class="d-flex">
+                    <label class="col-sm-2 col-form-label">Ativo</label>
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="radio" name="flexRadioDefault" value="true" id="flexRadioDefault1" th:field="*{ativo}">
+                        <label class="form-check-label" for="flexRadioDefault1">Sim</label>
+                    </div>
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="radio" name="flexRadioDefault" value="false" id="flexRadioDefault2" th:field="*{ativo}" checked>
+                        <label class="form-check-label" for="flexRadioDefault2">Não</label>
+                    </div>
+                </div>
+                <input type="submit" th:value="${add} ? 'Cadastrar Cliente' : 'Editar Cliente'" class="btn btn-primary mb-3"/>
+            </div>
+        </form>
+        <br/>
+        <a th:href="@{/clientes}">Voltar</a>
+        <br></br>
+    </main>
+</body>
+</html>

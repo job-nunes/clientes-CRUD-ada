@@ -1,7 +1,11 @@
 package br.com.ada.programacaowebi.model;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.NotNull;
 import lombok.*;
+import org.springframework.beans.factory.annotation.Value;
 
 @Entity
 @Table(name = "tb_cliente")
@@ -17,12 +21,21 @@ public class Cliente {
     @Column(name = "idCliente")
     private Long id;
 
+    @NotEmpty(message = "O Documento não pode ser vazio!")
+    @NotBlank(message = "O Documento não pode ser vazio!")
     @Column(unique = true)
     private String documento;
 
+    @NotBlank(message = "O Documento não pode ser vazio!")
+    @NotEmpty(message = "O Nome não pode ser vazio!")
     private String nome;
+
     private String endereco;
-    private String tipoPessoa;
+
+    @NotNull(message = "O Tipo Pessoa não pode ser null")
+    @Enumerated(EnumType.STRING)
+    private TipoPessoa tipoPessoa;
+
     private Boolean ativo;
 
 
