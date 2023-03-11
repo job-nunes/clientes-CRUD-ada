@@ -1,5 +1,6 @@
 package br.com.ada.programacaowebi.controller;
 
+import br.com.ada.programacaowebi.model.Aluguel;
 import br.com.ada.programacaowebi.model.Cliente;
 import br.com.ada.programacaowebi.model.TipoPessoa;
 import br.com.ada.programacaowebi.service.ClienteService;
@@ -37,7 +38,7 @@ public class ClienteController {
     }
 
     @GetMapping("/cliente/add")
-    public String addCliente(Model model, Cliente veiculo) {
+    public String addCliente(Model model, Cliente cliente) {
         model.addAttribute("add", Boolean.TRUE);
         model.addAttribute("cliente", new Cliente());
         model.addAttribute("tipoPessoa", TipoPessoa.values());
@@ -56,9 +57,13 @@ public class ClienteController {
         return "redirect:/clientes";
     }
 
-    @GetMapping("/cliente/{clienteId}/delete")
-    public String deletarCliente(@PathVariable("clienteId") Long clienteId){
-        this.clienteService.removerClientePorId(clienteId);
+    @GetMapping("/cliente/{clienteId}/desativa")
+    public String desativarCliente(@PathVariable("clienteId") Long clienteId){
+        Optional<Cliente> optionalCliente = this.clienteService.buscarClientePorId(clienteId);
+        optionalCliente.ifPresent(cliente -> {
+            cliente.setAtivo(false);
+            this.clienteService.createCliente(cliente);
+        });
         return "redirect:/clientes";
     }
 

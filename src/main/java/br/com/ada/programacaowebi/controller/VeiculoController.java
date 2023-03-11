@@ -1,5 +1,6 @@
 package br.com.ada.programacaowebi.controller;
 
+import br.com.ada.programacaowebi.model.Cliente;
 import br.com.ada.programacaowebi.model.TipoPessoa;
 import br.com.ada.programacaowebi.model.TipoVeiculo;
 import br.com.ada.programacaowebi.model.Veiculo;
@@ -59,10 +60,14 @@ public class VeiculoController {
         return "redirect:/veiculos";
     }
 
-    @GetMapping("/veiculo/{veiculoId}/delete")
-    public String deletarVeiculo(@PathVariable("veiculoId") Long veiculoId) {
-        this.veiculoService.removerVeiculoPorId(veiculoId);
-        return "redirect:/veiculos";
+    @GetMapping("/veiculo/{veiculoId}/desativa")
+    public String desativarVeiculo(@PathVariable("veiculoId") Long veiculoId) {
+        Optional<Veiculo> optionalVeiculo = this.veiculoService.buscarVeiculoPorId(veiculoId);
+        optionalVeiculo.ifPresent(veiculo -> {
+            veiculo.setDisponivel(false);
+            this.veiculoService.createVeiculo(veiculo);
+        });
+        return "redirect:/clientes";
     }
 
     @GetMapping("/veiculo/{veiculoId}/edit")

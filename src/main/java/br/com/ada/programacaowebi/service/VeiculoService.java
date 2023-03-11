@@ -1,5 +1,6 @@
 package br.com.ada.programacaowebi.service;
 
+import br.com.ada.programacaowebi.model.Cliente;
 import br.com.ada.programacaowebi.model.Veiculo;
 import br.com.ada.programacaowebi.repository.VeiculoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,7 +26,9 @@ public class VeiculoService {
         return this.
                 veiculoRepository.findAll();
     }
-
+    public List<Veiculo> listarTodosAtivos() {
+        return this.veiculoRepository.findByDisponivel(true);
+    }
     public Page<Veiculo> listarPaginado(Integer numeroPagina, Integer tamanhoPagina) {
         return this.veiculoRepository
                 .findAll(PageRequest.of(numeroPagina, tamanhoPagina, Sort.by(Sort.Order.asc("id"))));

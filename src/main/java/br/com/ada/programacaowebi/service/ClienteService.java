@@ -24,6 +24,9 @@ public class ClienteService {
     public List<Cliente> listarTodos() {
         return this.clienteRepository.findAll();
     }
+    public List<Cliente> listarTodosAtivos() {
+        return this.clienteRepository.findByAtivo(true);
+    }
 
     public Page<Cliente> listarPaginado(Integer numeroPagina, Integer tamanhoPagina) {
         return this.clienteRepository.
